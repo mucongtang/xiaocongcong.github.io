@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页 | 我的个人网站</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 变量定义 */
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #1e40af;
+            --text-color: #333333;
+            --light-color: #f3f4f6;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --white-color: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--light-color);
+        }
+
+        /* 导航栏样式 */
+        nav {
+            background-color: var(--white-color);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 响应式导航 */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* 主要内容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+
+        /* 英雄区域样式 */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6rem;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-color);
+            margin-bottom: 2rem;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid var(--white-color);
+            box-shadow: var(--shadow);
+        }
+
+        /* 关于我部分 */
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .about {
+            display: flex;
+            gap: 4rem;
+            margin-bottom: 6rem;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--gray-color);
+        }
+
+        .about-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .info-icon {
+            color: var(--primary-color);
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        /* 技能部分 */
+        .skills {
+            margin-bottom: 6rem;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-desc {
+            color: var(--gray-color);
+        }
+
+        /* 项目部分 */
+        .projects {
+            margin-bottom: 6rem;
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--white-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .project-desc {
+            color: var(--gray-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .project-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .project-link i {
+            margin-left: 0.5rem;
+        }
+
+        /* 联系部分 */
+        .contact {
+            margin-bottom: 4rem;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 4rem;
+            background-color: var(--white-color);
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .contact-text h3 {
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-text p {
+            color: var(--gray-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white-color);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: #9ca3af;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about {
+                flex-direction: column;
+            }
+
+            .skills-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--white-color);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                padding: 2rem 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 7rem 1rem 3rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .profile-img {
+                width: 250px;
+                height: 250px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .about-info {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">我的个人主页</a>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#contact">联系我</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 英雄区域 -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">你好，我是 <span class="highlight">张三</span></h1>
+                <p class="hero-subtitle">一名热爱编程的全栈开发工程师，专注于创建高质量、用户友好的数字产品</p>
+                <a href="#contact" class="btn">联系我</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://picsum.photos/id/1012/300/300" alt="个人头像" class="profile-img">
+            </div>
+        </section>
+
+        <!-- 关于我 -->
+        <section id="about">
+            <h2 class="section-title">关于我</h2>
+            <div class="about">
+                <div class="about-image">
+                    <img src="https://picsum.photos/id/1039/600/400" alt="关于我" class="about-img">
+                </div>
+                <div class="about-content">
+                    <p class="about-text">
+                        我是一名拥有5年开发经验的全栈工程师，毕业于XX大学计算机科学专业。我热爱编程，热衷于解决复杂的技术问题，
+                        并不断学习新技术和框架来提升自己的专业能力。我的工作理念是写出优雅、高效且易于维护的代码，
+                        同时注重用户体验和产品质量。
+                    </p>
+                    <div class="about-info">
+                        <div class="info-item">
+                            <i class="fas fa-user info-icon"></i>
+                            <div>
+                                <strong>姓名：</strong> 张三
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-birthday-cake info-icon"></i>
+                            <div>
+                                <strong>年龄：</strong> 28
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope info-icon"></i>
+                            <div>
+                                <strong>邮箱：</strong> zhangsan@example.com
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone info-icon"></i>
+                            <div>
+                                <strong>电话：</strong> 138-0000-0000
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn">下载简历</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技能部分 -->
+        <section id="skills">
+            <h2 class="section-title">我的技能</h2>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h3 class="skill-title">前端开发</h3>
+                    <p class="skill-desc">精通HTML5、CSS3、JavaScript、React、Vue等前端技术，能够构建响应式、高性能的用户界面。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fab fa-node-js"></i>
+                    </div>
+                    <h3 class="skill-title">后端开发</h3>
+                    <p class="skill-desc">熟练掌握Node.js、Python、Java等后端语言，能够设计和实现高效、安全的API和服务。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="skill-title">数据库</h3>
+                    <p class="skill-desc">熟悉MySQL、MongoDB、Redis等数据库系统，能够设计优化的数据结构和查询语句。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="skill-title">DevOps</h3>
+                    <p class="skill-desc">了解Docker、Git、CI/CD等工具和流程，能够实现自动化部署和运维。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="skill-title">移动端开发</h3>
+                    <p class="skill-desc">掌握React Native、Flutter等跨平台开发技术，能够开发适配多端的移动应用。</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="skill-title">项目管理</h3>
+                    <p class="skill-desc">具备敏捷开发和项目管理经验，能够协调团队完成复杂项目的规划和交付。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 项目展示 -->
+        <section id="projects">
+            <h2 class="section-title">我的项目</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <img src="https://picsum.photos/id/0/350/200" alt="项目1" class="project-img">
+                    <div class="project-content">
+                        <h3 class="project-title">电商网站</h3>
+                        <p class="project-desc">基于React和Node.js开发的全功能电商平台，包含商品展示、购物车、支付等核心功能。</p>
+                        <a href="#" class="project-link">查看详情 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://picsum.photos/id/180/350/200" alt="项目2" class="project-img">
+                    <div class="project-content">
+                        <h3 class="project-title">任务管理系统</h3>
+                        <p class="project-desc">使用Vue和Spring Boot开发的团队协作工具，支持任务分配、进度跟踪和数据分析。</p>
+                        <a href="#" class="project-link">查看详情 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://picsum.photos/id/160/350/200" alt="项目3" class="project-img">
+                    <div class="project-content">
+                        <h3 class="project-title">移动端应用</h3>
+                        <p class="project-desc">基于Flutter开发的跨平台移动应用，适配iOS和Android，提供流畅的用户体验。</p>
+                        <a href="#" class="project-link">查看详情 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我 -->
+        <section id="contact">
+            <h2 class="section-title">联系我</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>联系方式</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>地址</h3>
+                            <p>北京市朝阳区某某大厦1001室</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>邮箱</h3>
+                            <p>zhangsan@example.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>电话</h3>
+                            <p>138-0000-0000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>发送消息</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name" class="form-label">姓名</label>
+                            <input type="text" id="name" class="form-input" placeholder="请输入您的姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">邮箱</label>
+                            <input type="email" id="email" class="form-input" placeholder="请输入您的邮箱">
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">消息</label>
+                            <textarea id="message" class="form-input" placeholder="请输入您的留言"></textarea>
+                        </div>
+                        <button type="submit" class="btn">发送</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-weixin"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+        </div>
+        <p class="copyright">&copy; 2024 张三 - 全栈开发工程师. 保留所有权利.</p>
+    </footer>
+
+    <!-- JavaScript 交互 -->
+    <script>
+        // 移动端导航菜单切换
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // 关闭导航菜单当点击链接时
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
